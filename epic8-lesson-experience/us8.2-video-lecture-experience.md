@@ -3,8 +3,8 @@
 ## User Story
 
 **As a** student  
-**I want to** watch video lectures with comprehensive controls  
-**So that** I can learn at my own pace and comprehend the content fully
+**I want to** watch video lectures with integrated quizzes and comprehensive controls  
+**So that** I can learn at my own pace and verify my understanding as I progress
 
 ## Acceptance Criteria
 
@@ -22,6 +22,10 @@
 7. User can take timestamped notes while watching the video
 8. Video player works consistently across all major browsers and devices
 9. Videos can be downloaded for offline viewing (where permitted)
+10. **Video player integrates quizzes at specific timestamps during playback**
+11. **Video playback pauses when a quiz appears and resumes after completion**
+12. **User must complete quizzes to continue watching the video beyond quiz points**
+13. **System tracks quiz performance as part of the overall learning progress**
 
 ## Flow Diagram
 
@@ -56,14 +60,27 @@ flowchart TD
     S --> T[Update progress indicator]
     S --> U[Save current position]
 
-    G --> V[User completes video]
-    V --> W[Mark video as watched]
-    V --> X[Update lesson progress]
+    G --> V{Quiz timestamp reached?}
+    V -- Yes --> W[Pause video]
+    W --> X[Display integrated quiz]
+    X --> Y[User completes quiz]
+    Y --> Z[System records quiz results]
+    Z --> AA{Quiz passed?}
+    AA -- Yes --> AB[Resume video playback]
+    AB --> G
+    AA -- No --> AC[Option to retry quiz or review content]
+    AC --> X
+
+    V -- No --> G
+
+    G --> AD[User completes video]
+    AD --> AE[Mark video as watched]
+    AE --> AF[Update lesson progress]
 ```
 
 ## Details
 
-**Story Points:** 5  
+**Story Points:** 8  
 **Priority:** Critical  
 **Epic:** [Epic 8: Lesson Experience](./README.md)
 
@@ -79,3 +96,8 @@ flowchart TD
 - Ensure videos are properly compressed without quality loss
 - Consider implementing picture-in-picture mode for multitasking
 - Test video player across different devices, browsers, and connection speeds
+- **Develop a system to integrate quizzes at specific timestamps in videos**
+- **Create smooth transitions between video playback and quiz display**
+- **Implement quiz validation that controls video progression**
+- **Design a database structure to store quiz timestamps with video content**
+- **Ensure quiz results are properly tracked and associated with video progress**
